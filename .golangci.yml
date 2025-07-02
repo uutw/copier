@@ -1,0 +1,53 @@
+version: "2"
+linters:
+  enable:
+    - bodyclose
+    - copyloopvar
+    - inamedparam
+    - misspell
+    - revive
+    - whitespace
+    - govet
+    - unused
+    - errcheck
+    - ineffassign
+    - staticcheck
+  settings:
+    govet:
+      disable:
+        - shadow
+        - nilness
+      enable-all: true
+    misspell:
+      locale: US
+    staticcheck:
+      checks: ["all", "-QF1001"]
+  exclusions:
+    generated: strict
+    rules:
+      - linters:
+          - gocyclo
+        path: _test\.go
+      - linters:
+          - govet
+        path: _test\.go
+        text: fieldalignment
+      - path: (.+)\.go$
+        text: should have a package comment
+      - path: (.+)\.go$
+        text: exported (.+) should have comment( \(or a comment on this block\))? or be unexported
+    paths:
+      - .github
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+formatters:
+  enable:
+    - gofmt
+  settings:
+    gofmt:
+      simplify: true
+  exclusions:
+    generated: strict
+    paths:
+      - .github
